@@ -1,8 +1,12 @@
 package org.example;
 
+import org.example.ObjectPropertyProvider;
+
 public class Application {
 
     public static void main(String[] args){
+        ShopClass shop = new ShopClass();
+
 
     }
 }
