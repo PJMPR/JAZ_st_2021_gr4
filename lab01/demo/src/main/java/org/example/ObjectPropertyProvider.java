@@ -12,7 +12,7 @@ import java.lang.reflect.Modifier;
 public class ObjectPropertyProvider {
 
     public static boolean isGetter(Method method){
-        if(!method.getName().startsWith("get")){
+        if(!method.getName().startsWith("get") && !method.getName().startsWith("is") ){
             return false;
         }
         if(method.getParameterTypes().length != 0){
@@ -24,6 +24,8 @@ public class ObjectPropertyProvider {
         if(!Modifier.isPublic(method.getModifiers())){
             return false;
         }
+
+
         return true;
     }
 
@@ -53,7 +55,6 @@ public class ObjectPropertyProvider {
                 passedMethods.add(method);
             }
         }
-        System.out.println(Arrays.toString(passedMethods.toArray()));
         return passedMethods;
     }
 
@@ -72,8 +73,7 @@ public class ObjectPropertyProvider {
 
 
     public List<Field> getFieldsForPublicProperties(Class<?> clazz){
-        Field[] fields = clazz.getFields();
-
+    return Arrays.stream(clazz.getDeclaredFields()).toList();
     }
 
 
