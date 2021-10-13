@@ -8,6 +8,7 @@ import java.util.List;
 
 public class ObjectPropertyProvider {
 
+
     public List<Method> getPublicGetters(Class<?> clazz){
 
         return Arrays.stream(clazz.getDeclaredMethods()).toList();
