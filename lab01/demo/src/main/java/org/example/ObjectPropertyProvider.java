@@ -7,6 +7,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class ObjectPropertyProvider {
 
@@ -50,10 +51,18 @@ public class ObjectPropertyProvider {
 
     public List<Field> getFieldsForPublicProperties(Class<?> clazz){
         Field[] fields = clazz.getDeclaredFields();
-        Method[] methods = clazz.getDeclaredMethods();
-        
+        Method[] methods = clazz.getMethods();
+        List listaWynik = new ArrayList();
 
-        return Arrays.stream(clazz.getDeclaredFields()).toList();
+        for (Field field: fields){
+            for (Method method : methods){
+                if (method.getName().contains(field.getName().substring(0, 1).toUpperCase()+field.getName().substring(1))){
+                    listaWynik.add(field);
+                    break;
+                }
+            }
+        }
+        return listaWynik;
 
     }
 
