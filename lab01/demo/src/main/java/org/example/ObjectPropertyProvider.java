@@ -11,29 +11,30 @@ import java.util.List;
 public class ObjectPropertyProvider {
 
     public List<Method> getPublicGetters(Class<?> clazz){
-        Method[] methods = clazz.getMethods();
+        Method[] methods = clazz.getDeclaredMethods();
         List<Method> getters = new ArrayList<>();
         for (Method method : methods) {
-            if(Modifier.toString(method.getModifiers()).equals("public")
+            if(Modifier.isPublic(method.getModifiers())
                     && (method.getName().startsWith("get") || method.getName().startsWith("is"))
-                    && !method.getReturnType().toGenericString().equals("void")
+                    && !method.getReturnType().equals(void.class)
                     && method.getParameterTypes().length == 0
             ){
                 getters.add(method);
             }
         }
+
         return getters;
 
     }
 
 
     public List<Method> getPublicSetters(Class<?> clazz){
-        Method[] methods = clazz.getMethods();
+        Method[] methods = clazz.getDeclaredMethods();
         List<Method> getters = new ArrayList<>();
         for (Method method : methods) {
-            if(Modifier.toString(method.getModifiers()).equals("public")
+            if(Modifier.isPublic(method.getModifiers())
                     && (method.getName().startsWith("set"))
-                    && method.getReturnType().toGenericString().equals("void")
+                    && method.getReturnType().equals(void.class)
                     && method.getParameterTypes().length == 1
             ){
                 getters.add(method);
