@@ -10,43 +10,44 @@ import java.util.List;
 
 public class ObjectPropertyProvider {
 
-    public List<Method> getPublicGetters(Class<?> clazz){
-        Method[] methods = clazz.getMethods();
-        ArrayList methodsToReturn = new ArrayList();
+    public boolean isGetter(Method method) {
+        if ((!method.getName().startsWith("get") && (!method.getName().startsWith("is"))) || method.getParameterCount() != 0 || method.getReturnType().equals(Void.TYPE) || !Modifier.isPublic(method.getModifiers())) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public boolean isSetter(Method method) {
+        if (!method.getName().startsWith("set") || method.getParameterCount() != 1 || !method.getReturnType().equals(Void.TYPE) || !Modifier.isPublic(method.getModifiers())) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
-        for(Method method : methods){
-            int modifier = method.getModifiers();
-            if(Modifier.toString(modifier).equals("public")){
-                if(method.getName().startsWith("get") || method.getName().startsWith("is")){
-                    if((method.getParameters().length==0)){
-                        if(!method.getReturnType().getName().equals("void")){
-                            methodsToReturn.add(method);
-                        }
-                    }
-                }
+    public List<Method> getPublicGetters(Class<?> clazz){
+        List methodsInitial = Arrays.stream(clazz.getDeclaredMethods()).toList();
+        ArrayList methodsOutput = new ArrayList();
+        //Method[] methods = clazz.getMethods();
+        for (int i = 0; i < methodsInitial.size(); i++) {
+            if (isGetter((Method) methodsInitial.get(i))) {
+                methodsOutput.add(methodsInitial.get(i));
             }
         }
-        return methodsToReturn;
+        return methodsOutput;
     }
 
 
     public List<Method> getPublicSetters(Class<?> clazz){
-        Method[] methods = clazz.getMethods();
-        ArrayList methodsToReturn = new ArrayList();
-
-        for(Method method : methods){
-            int modifier = method.getModifiers();
-            if(Modifier.toString(modifier).equals("public")){
-                if(method.getName().startsWith("set")){
-                    if((method.getParameters().length==1)){
-                        if(method.getReturnType().getName().equals("void")){
-                            methodsToReturn.add(method);
-                        }
-                    }
-                }
+        List methodsInitial = Arrays.stream(clazz.getDeclaredMethods()).toList();
+        ArrayList methodsOutput = new ArrayList();
+        //Method[] methods = clazz.getMethods();
+        for (int i = 0; i < methodsInitial.size(); i++) {
+            if (isSetter((Method) methodsInitial.get(i))) {
+                methodsOutput.add(methodsInitial.get(i));
             }
         }
-        return methodsToReturn;
+        return methodsOutput;
     }
 
 
