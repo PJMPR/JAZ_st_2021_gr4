@@ -1,8 +1,8 @@
-package org.example.tests;
+package org.example;
 
-public class Subject{
+public class TestClass{
 
-    private String Name;
+    private String name;
     private int number;
     private boolean isDone;
     private String status;
@@ -14,11 +14,11 @@ public class Subject{
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
-    public void setName(String Name) {
-        this.Name = Name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getNumber() {

@@ -36,7 +36,7 @@ public class ObjectPropertyProviderTests {
         List<String> fields = provider.getFieldsForPublicProperties(Subject.class)
                 .stream().map(x->x.getName()).toList();
         assertThat(fields, hasSize(4));
-        assertThat(fields, hasItems("name","number","isDone", "status"));
+        assertThat(fields, hasItems("Name","number","isDone", "status"));
         assertThat(fields, not(hasItems("value", "something")));
     }
 }
