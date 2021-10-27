@@ -11,6 +11,7 @@ import java.util.List;
 public class ObjectPropertyProvider {
 
     public List<Method> getPublicGetters(Class<?> clazz){
+<<<<<<< HEAD:lab01/demo/src/main/java/org/example/ObjectPropertyProvider.java
         Method[] methods = clazz.getMethods();
         ArrayList methodsToReturn = new ArrayList();
 
@@ -27,6 +28,9 @@ public class ObjectPropertyProvider {
             }
         }
         return methodsToReturn;
+=======
+        return Arrays.stream(clazz.getDeclaredMethods()).toList();
+>>>>>>> parent of ea4c964 (fix):lab01/src/main/java/org/example/ObjectPropertyProvider.java
     }
 
 
