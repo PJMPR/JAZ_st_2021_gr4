@@ -8,7 +8,7 @@ public class ValidationResult{
 
     private Object validatedObject;
     private boolean isValid;
-    private Map<String, List<String>> notValidFields = new HashMap<String, List<String>>();
+    private Map<String, List<String>> notValidFields = new HashMap<>();
 
     public Object getValidatedObject() {
         return validatedObject;
@@ -18,8 +18,8 @@ public class ValidationResult{
         this.validatedObject = validatedObject;
     }
 
-    public void putToNotValidFields(String name, List<String> notValidField) {
-        notValidFields.put(name, notValidField);
+    public void putToNotValidFields(String name, List<String> notValidFieldList) {
+        notValidFields.put(name, notValidFieldList);
     }
 
     public boolean isValid() {

@@ -19,17 +19,20 @@ public class Validator {
         //get all fields
         Field[] fields = object.getClass().getDeclaredFields();
         ValidationResult validationResult = new ValidationResult();
-        System.out.println(Arrays.toString(fields));
+        validationResult.setValidatedObject(object);
+
+
         for (Field field :
                 fields) {
+
+            List<String> nonValidFields = new ArrayList<String>();
 
             if (field.isAnnotationPresent(NotNull.class)) {
                 try {
                     field.setAccessible(true);
+                    System.out.println(field.get(object));
                     if (field.get(object) == null) {
-                        List<String> nonValidFields = new ArrayList<String>();
                         nonValidFields.add(field.getAnnotation(NotNull.class).message());
-                        validationResult.putToNotValidFields(field.getName(), nonValidFields);
                     }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
@@ -40,10 +43,9 @@ public class Validator {
                 try {
                     field.setAccessible(true);
                     String pattern = field.getAnnotation(Regex.class).pattern();
-                    if (object.getEmail().matches(pattern)) {
-                        List<String> nonValidFields = new ArrayList<String>();
+
+                    if (!field.get(object).toString().matches(pattern)) {
                         nonValidFields.add(field.getAnnotation(Regex.class).message());
-                        validationResult.putToNotValidFields(field.getName(), nonValidFields);
                     }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
@@ -53,18 +55,20 @@ public class Validator {
             if (field.isAnnotationPresent(Range.class)) {
                 try {
                     field.setAccessible(true);
-                    if (object.getNumber() < field.getAnnotation(Range.class).max() && object.getNumber() > field.getAnnotation(Range.class).min()) {
-                        List<String> nonValidFields = new ArrayList<String>();
-                        nonValidFields.add(field.getAnnotation(NotNull.class).message());
-                        validationResult.putToNotValidFields(field.getName(), nonValidFields);
+                    if ((Integer)field.get(object) > field.getAnnotation(Range.class).max() || (Integer)field.get(object) < field.getAnnotation(Range.class).min()) {
+                        nonValidFields.add(field.getAnnotation(Range.class).message() + field.getAnnotation(Range.class).min() + "," + field.getAnnotation(Range.class).max() + "]");
                     }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
 
+            if (nonValidFields.size() > 0) validationResult.putToNotValidFields(field.getName(), nonValidFields);
+            System.out.println(validationResult.getNotValidFields());
         }
+
         System.out.println(validationResult.getNotValidFields());
+        validationResult.setValid(validationResult.getNotValidFields().size() == 0);
         return validationResult;
     }
 }
