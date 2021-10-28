@@ -18,6 +18,10 @@ public class ValidationResult{
         this.validatedObject = validatedObject;
     }
 
+    public void putToNotValidFields(String name, List<String> notValidField) {
+        notValidFields.put(name, notValidField);
+    }
+
     public boolean isValid() {
         return isValid;
     }
