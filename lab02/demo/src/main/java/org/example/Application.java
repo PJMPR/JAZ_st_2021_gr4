@@ -17,8 +17,12 @@ public class Application {
         f.get(obj)==null);
         new Validator().validate(new Sample());
         new Validator().validate(new Object());
+
+
     }
 }
+
+
 
 
 
