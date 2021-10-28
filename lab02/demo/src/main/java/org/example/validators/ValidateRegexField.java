@@ -16,10 +16,8 @@ public class ValidateRegexField <TClass> implements FieldValidator {
     @Override
     public boolean isFieldValid() {
         field.setAccessible(true);
-        String value;
         try {
-            value = (String) field.get(object);
-            return value.matches(field.getAnnotation(Regex.class).pattern());
+            return fieldValue().matches(pattern());
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -29,6 +27,14 @@ public class ValidateRegexField <TClass> implements FieldValidator {
     @Override
     public String getErrorMessage(){
         return field.getAnnotation(Regex.class).message();
+    }
+
+    public String fieldValue() throws IllegalAccessException {
+        return (String) field.get(object);
+    }
+
+    public String pattern(){
+        return field.getAnnotation(Regex.class).pattern();
     }
 
 }

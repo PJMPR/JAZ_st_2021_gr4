@@ -26,24 +26,15 @@ public class FieldValidationResult {
     public void validate(){
         if(field.isAnnotationPresent(NotNull.class)){
             fieldValidator = new ValidateNotNullField(field, object);
-            if(!fieldValidator.isFieldValid()){
-                errorMessages.add(fieldValidator.getErrorMessage());
-            }
-
+            addErrorMessageIfFieldIsInvalid();
         }
         if(field.isAnnotationPresent(Range.class)){
             fieldValidator = new ValidateRangeField(field, object);
-            if(!fieldValidator.isFieldValid()) {
-                errorMessages.add(fieldValidator.getErrorMessage());
-            }
-
+            addErrorMessageIfFieldIsInvalid();
         }
         if(field.isAnnotationPresent(Regex.class)){
             fieldValidator = new ValidateRegexField(field, object);
-            if(!fieldValidator.isFieldValid()){
-                errorMessages.add(fieldValidator.getErrorMessage());
-            }
-
+            addErrorMessageIfFieldIsInvalid();
         }
         isFieldValid = errorMessages.size() == 0;
     }
@@ -54,5 +45,11 @@ public class FieldValidationResult {
 
     public boolean isFieldValid() {
         return isFieldValid;
+    }
+
+    public void addErrorMessageIfFieldIsInvalid(){
+        if(!fieldValidator.isFieldValid()){
+            errorMessages.add(fieldValidator.getErrorMessage());
+        }
     }
 }

@@ -17,7 +17,7 @@ public class ValidateNotNullField <TClass> implements FieldValidator{
     public boolean isFieldValid() {
         field.setAccessible(true);
         try {
-            return field.get(object) != null;
+            return fieldValue() != null;
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -27,5 +27,9 @@ public class ValidateNotNullField <TClass> implements FieldValidator{
     @Override
     public String getErrorMessage(){
         return field.getAnnotation(NotNull.class).message();
+    }
+
+    public Object fieldValue() throws IllegalAccessException {
+        return field.get(object);
     }
 }

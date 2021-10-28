@@ -18,7 +18,7 @@ public class ValidateRangeField <TClass> implements FieldValidator{
     public boolean isFieldValid() {
         field.setAccessible(true);
         try {
-            return valueInRange(getFieldValue());
+            return isValueInRange(fieldValue());
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -32,11 +32,11 @@ public class ValidateRangeField <TClass> implements FieldValidator{
                     + String.format("[%d,%d]", getMin(), getMax());
     }
 
-    public int getFieldValue() throws IllegalAccessException {
+    public int fieldValue() throws IllegalAccessException {
         return (Integer) field.get(object);
     }
 
-    public boolean valueInRange(int value){
+    public boolean isValueInRange(int value){
         return getMin() < value && value < getMax();
     }
 
