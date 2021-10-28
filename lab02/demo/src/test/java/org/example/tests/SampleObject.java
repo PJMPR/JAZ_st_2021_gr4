@@ -1,14 +1,14 @@
 package org.example.tests;
 
-import org.example.annotations.*;
+
+import org.example.annotations.NotNull;
+import org.example.annotations.Range;
+import org.example.annotations.Regex;
 
 public class SampleObject {
-
-    @NotNull
+    @NotNull(message = "field is null")
     private String name;
 
-
-    @NotNull
     @Regex(pattern = "^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$", message = "email should be in correct format")
     private String email;
 

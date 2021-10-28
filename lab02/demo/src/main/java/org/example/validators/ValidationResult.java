@@ -13,7 +13,6 @@ public class ValidationResult{
     public Object getValidatedObject() {
         return validatedObject;
     }
-
     public void setValidatedObject(Object validatedObject) {
         this.validatedObject = validatedObject;
     }
