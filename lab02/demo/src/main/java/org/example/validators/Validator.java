@@ -1,19 +1,25 @@
 package org.example.validators;
-
-
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
+
 
 public class Validator {
 
     public <TClass> ValidationResult validate(TClass object){
-       Field[] fieldList = object.getClass().getDeclaredFields();
+        ValidationResult validationResult = new ValidationResult();
+        validationResult.setValidatedObject(object);
+        validationResult.setValid(true);
+
+        Field[] fieldList = object.getClass().getDeclaredFields();
+
        for (Field field: fieldList){
-           System.out.println(Arrays.toString(field.getAnnotations()));
+           FieldValidationResult fieldResult = new FieldValidationResult(object, field);
+
+           if(!fieldResult.isFieldValid()) {
+               validationResult.addNotValidField(field.getName(), fieldResult.getErrorMessages());
+               validationResult.setValid(false);
+           }
+
        }
-
-
-        return null;
+       return validationResult;
     }
 }
