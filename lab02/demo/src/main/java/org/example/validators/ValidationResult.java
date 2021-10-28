@@ -30,9 +30,5 @@ public class ValidationResult{
         return notValidFields;
     }
 
-    public void addNotValidField(String key, List<String> value){
-        notValidFields.put(key, value);
-
-    }
 
 }
