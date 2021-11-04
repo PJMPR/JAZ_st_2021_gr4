@@ -20,10 +20,10 @@ public class QueryProcessor {
 
         final Map<String, Object> fieldNamesValues =
                 Arrays.stream(parameters.getClass().getDeclaredFields())
-                .collect(
-                        HashMap::new,
-                        (map,field)->map.put(field.getName(), getValue(field, parameters)),
-                        HashMap::putAll);
+                        .collect(
+                            HashMap::new,
+                            (map, field) -> map.put(field.getName(), getValue(field, parameters)),
+                            HashMap::putAll);
 
         QueryProcessorUtils queryProcessorUtils = new QueryProcessorUtils();
 
@@ -32,33 +32,20 @@ public class QueryProcessor {
                 result.setItems(queryProcessorUtils.filterField(fieldName, value, result.getItems()));
         });
 
-        if(parameters.getPage() != null) {
-            result.setCurrentPage(parameters.getPage().getPageNumber());
-            result.setPages(max(result.getItems().size() / parameters.getPage().getSize(), 1));
+        PageUtils pageUtils = new PageUtils(parameters.getPage(), result);
+        pageUtils.pageOutput();
 
-            int noOfRecordsToSkip = parameters.getPage().getSize() * (result.getCurrentPage() - 1);
-
-            result.setItems(result.getItems()
-                    .stream()
-                    .skip(noOfRecordsToSkip > result.getItems().size() ? 0 : noOfRecordsToSkip)
-                    .limit(parameters.getPage().getSize())
-                    .toList());
-        }
-
-        List<FunctionResult> functionResults = new ArrayList<>();
-
-        parameters.getFunctions().forEach(
-                function -> {
+        result.setFunctionResults(parameters.getFunctions()
+                .stream()
+                .map(function -> {
                     FunctionsUtils functions = new FunctionsUtils(result.getItems().stream().toList(), function.getFunction(), function.getFieldName());
-                    functionResults.add(functions.calculate());
-        });
-
-        result.setFunctionResults(functionResults);
+                    return functions.calculate();
+                }).toList());
 
         return result;
     }
 
-    private Object getValue(Field field, Object object)  {
+    private Object getValue(Field field, Object object) {
         field.setAccessible(true);
         try {
             return field.get(object);
