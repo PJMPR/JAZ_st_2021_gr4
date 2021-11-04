@@ -1,23 +1,15 @@
 package org.example.queries;
 
-import org.example.model.Gender;
 import org.example.model.People;
-import org.example.model.Person;
-import org.example.queries.criteria.*;
+import org.example.queries.functions.FunctionsUtils;
 import org.example.queries.results.FunctionResult;
 import org.example.queries.results.Results;
-import org.example.queries.search.Funcs;
-import org.example.queries.search.FunctionsParameters;
 import org.example.queries.search.SearchParameters;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static java.lang.Math.max;
-import static java.lang.Math.min;
 
 public class QueryProcessor {
 
@@ -26,79 +18,19 @@ public class QueryProcessor {
 
         result.setItems(People.Data);
 
-        ICriterion criterion;
-
-        List<Field> criteriaFields =
+        final Map<String, Object> fieldNamesValues =
                 Arrays.stream(parameters.getClass().getDeclaredFields())
-                        .toList()
-                        .stream()
-                        .filter(field -> {
-                            try {
-                                field.setAccessible(true);
-                                return field.get(parameters) != null;
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            }
-                            return true;
-                        })
-                        .toList();
+                .collect(
+                        HashMap::new,
+                        (map,field)->map.put(field.getName(), getValue(field, parameters)),
+                        HashMap::putAll);
 
-        for (Field field : criteriaFields) {
-            try {
-                field.setAccessible(true);
-                Object value = field.get(parameters);
+        QueryProcessorUtils queryProcessorUtils = new QueryProcessorUtils();
 
-                if (value != null) {
-                    switch (field.getName()){
-                        case "name": {
-                            criterion = new NameCriterion(value.toString());
-                            result.setItems(criterion.meetsCriterion(result.getItems()));
-                        }
-                        case "surname": {
-                            criterion = new NameCriterion(value.toString());
-                            result.setItems(criterion.meetsCriterion(result.getItems()));
-                        }
-
-                    }
-                    if (field.getName().equals("ageFrom")) {
-                        criterion = new AgeFromCriterion((Integer) value);
-                        result.setItems(criterion.meetsCriterion(result.getItems()));
-                    }
-                    if (field.getName().equals("ageTo") && (Integer) value > 0) {
-                        criterion = new AgeToCriterion((Integer) value);
-                        result.setItems(criterion.meetsCriterion(result.getItems()));
-                    }
-                    if (field.getName().equals("incomeFrom")) {
-                        criterion = new IncomeFromCriterion((Double) value);
-                        result.setItems(criterion.meetsCriterion(result.getItems()));
-                    }
-                    if (field.getName().equals("incomeTo") && (Double) value > 0) {
-                        criterion = new IncomeToCriterion((Double) value);
-                        result.setItems(criterion.meetsCriterion(result.getItems()));
-                    }
-
-                    if (field.getName().equals("selectedGenders") && !Objects.equals(value.toString(), "[]")) {
-                        List<Gender> genderList = (List<Gender>) value;
-                        List<ICriterion> genderCriteria = new ArrayList<>();
-
-                        genderList.forEach(gender -> genderCriteria.add(new GenderCriterion(gender)));
-
-                        List<Person> multiGenderSearchResult = new ArrayList<>();
-
-                        genderCriteria.forEach(
-                                genderCriterion ->
-                                        multiGenderSearchResult.addAll(genderCriterion.meetsCriterion(result.getItems())));
-
-                        result.setItems(multiGenderSearchResult);
-                    }
-
-                }
-
-
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
+        fieldNamesValues.forEach((fieldName, value) -> {
+            if (queryProcessorUtils.filterField(fieldName, value, result.getItems()).size() > 0)
+                result.setItems(queryProcessorUtils.filterField(fieldName, value, result.getItems()));
+        });
 
         if(parameters.getPage() != null) {
             result.setCurrentPage(parameters.getPage().getPageNumber());
@@ -114,19 +46,26 @@ public class QueryProcessor {
         }
 
         List<FunctionResult> functionResults = new ArrayList<>();
-        for (FunctionsParameters function : parameters.getFunctions()) {
-            FunctionResult functionResult = new FunctionResult();
 
-            functionResult.setFunction(function.getFunction());
-            functionResult.setFieldName(function.getFieldName());
-            functionResult.setValue(0);
-
-            functionResults.add(functionResult);
-        }
+        parameters.getFunctions().forEach(
+                function -> {
+                    FunctionsUtils functions = new FunctionsUtils(result.getItems().stream().toList(), function.getFunction(), function.getFieldName());
+                    functionResults.add(functions.calculate());
+        });
 
         result.setFunctionResults(functionResults);
 
         return result;
+    }
+
+    private Object getValue(Field field, Object object)  {
+        field.setAccessible(true);
+        try {
+            return field.get(object);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
