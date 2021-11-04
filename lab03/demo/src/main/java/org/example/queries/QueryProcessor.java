@@ -1,15 +1,16 @@
 package org.example.queries;
 
 import org.example.model.People;
-import org.example.queries.functions.FunctionsUtils;
-import org.example.queries.results.FunctionResult;
+import org.example.queries.processingutils.FunctionsUtils;
+import org.example.queries.processingutils.PageUtils;
+import org.example.queries.processingutils.QueryProcessorUtils;
 import org.example.queries.results.Results;
 import org.example.queries.search.SearchParameters;
 
 import java.lang.reflect.Field;
-import java.util.*;
-
-import static java.lang.Math.max;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class QueryProcessor {
 

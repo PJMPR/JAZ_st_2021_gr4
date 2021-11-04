@@ -1,4 +1,4 @@
-package org.example.queries;
+package org.example.queries.processingutils;
 
 import org.example.queries.results.Results;
 import org.example.queries.search.Page;

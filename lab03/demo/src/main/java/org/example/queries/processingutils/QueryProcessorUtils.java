@@ -1,10 +1,9 @@
-package org.example.queries;
+package org.example.queries.processingutils;
 
 import org.example.model.Gender;
 import org.example.model.Person;
 import org.example.queries.criteria.*;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
