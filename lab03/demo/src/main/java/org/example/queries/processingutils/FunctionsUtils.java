@@ -43,7 +43,7 @@ public class FunctionsUtils {
         return functionResult;
     }
 
-    public FunctionResult calculate(){
+    public FunctionResult calculateResult(){
         switch (fieldName){
             case "age" -> {
                 return ageStats();

@@ -4,7 +4,6 @@ import org.example.queries.results.Results;
 import org.example.queries.search.Page;
 
 public class PageUtils {
-
     Page page;
     Results result;
 
@@ -13,7 +12,7 @@ public class PageUtils {
         this.result = result;
     }
 
-    public void pageOutput(){
+    public void setPageVars(){
         if (page != null) {
             result.setCurrentPage(page.getPageNumber());
             result.setPages(calculatePage());
