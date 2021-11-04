@@ -15,7 +15,6 @@ public class SearchParameters {
     private List<Gender> selectedGenders = new ArrayList<Gender>();
     private List<FunctionsParameters> functions = new ArrayList<FunctionsParameters>();
     private Page page;
-
     public String getName() {
         return name;
     }

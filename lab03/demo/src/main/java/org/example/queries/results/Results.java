@@ -1,9 +1,12 @@
 package org.example.queries.results;
 
 import org.example.model.Person;
+import org.example.queries.search.Page;
+import org.example.queries.search.SearchParameters;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Results {
 
