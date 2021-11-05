@@ -28,9 +28,7 @@ public class Results {
         this.functionResults = functionResults;
     }
 
-    public int getPages() {
-        return pages;
-    }
+    public int getPages() { return pages; }
 
     public void setPages(int pages) {
         this.pages = pages;
