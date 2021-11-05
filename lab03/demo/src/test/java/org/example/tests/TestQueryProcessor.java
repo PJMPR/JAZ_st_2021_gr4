@@ -30,8 +30,7 @@ public class TestQueryProcessor {
         params.getFunctions().add(new FunctionsParameters("age", Funcs.AVERAGE));
         params.getFunctions().add(new FunctionsParameters("income", Funcs.SUM));
         params.getFunctions().add(new FunctionsParameters("income", Funcs.AVERAGE));
-
-        //Zdefiniowanie Listy wyników wyszukiwania
+        
         Results result = new QueryProcessor().GetResults(params);
         assertThat(result.getItems(),hasSize(3));
         assertThat(result.getItems(),hasItems(

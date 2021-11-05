@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Results {
 
-    public List<Person> items = new ArrayList<>();
+    private List<Person> items = new ArrayList<>();
     private List<FunctionResult> functionResults = new ArrayList<>();
     private int pages;
     private int currentPage;
