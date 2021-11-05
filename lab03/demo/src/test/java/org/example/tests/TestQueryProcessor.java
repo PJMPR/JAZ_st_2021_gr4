@@ -10,6 +10,9 @@ import org.example.queries.search.Page;
 import org.example.queries.search.SearchParameters;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -67,4 +70,16 @@ public class TestQueryProcessor {
                 People.JanAnrusowski,
                 People.JanKowalski));
     }
+    @Test
+    public void test_should_check_if_male_and_female(){
+
+        SearchParameters params = new SearchParameters();
+        List<Gender> selectedGender = new ArrayList<>();
+        selectedGender.add(Gender.MALE);
+        selectedGender.add(Gender.FEMALE);
+        params.setSelectedGenders(selectedGender);
+        Results results = new QueryProcessor().GetResults(params);
+        assertThat(results.getItems(), hasSize(9));
+    }
+
 }
