@@ -17,18 +17,21 @@ public class TestQueryProcessor {
 
     @Test
     public void test_should_check_if_data_is_properly_filtered(){
-
+        //Tworzenie obiekta filtrów
         SearchParameters params =new SearchParameters();
+        //Wstawienie warunków
         params.setAgeFrom(20);
         params.setAgeTo(40);
         params.setIncomeFrom(2000);
         params.setPage(new Page(9,1));
         params.getSelectedGenders().add(Gender.FEMALE);
         params.getSelectedGenders().add(Gender.OTHER);
-        params.getFunctions().add(new FunctionsParameters("age", Funcs.AVARAGE));
-        params.getFunctions().add(new FunctionsParameters("income", Funcs.SUM));
-        params.getFunctions().add(new FunctionsParameters("income", Funcs.AVARAGE));
 
+        params.getFunctions().add(new FunctionsParameters("age", Funcs.AVERAGE));
+        params.getFunctions().add(new FunctionsParameters("income", Funcs.SUM));
+        params.getFunctions().add(new FunctionsParameters("income", Funcs.AVERAGE));
+
+        //Zdefiniowanie Listy wyników wyszukiwania
         Results result = new QueryProcessor().GetResults(params);
         assertThat(result.getItems(),hasSize(3));
         assertThat(result.getItems(),hasItems(
