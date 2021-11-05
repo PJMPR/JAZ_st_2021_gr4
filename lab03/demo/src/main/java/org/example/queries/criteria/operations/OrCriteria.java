@@ -1,0 +1,24 @@
+package org.example.queries.criteria.operations;
+import org.example.queries.criteria.Criteria;
+import org.example.model.Person;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class OrCriteria implements Criteria {
+
+    private List<Criteria> criteria;
+
+    public OrCriteria(List<Criteria> criteria) {
+        this.criteria = criteria;
+    }
+
+    @Override
+    public List<Person> meetCriteria(List<Person> persons) {
+        if(!criteria.isEmpty()) {
+            return criteria.stream()
+                    .flatMap(c -> c.meetCriteria(persons).stream())
+                    .distinct().collect(Collectors.toList());
+        }
+        return persons;
+    }
+}

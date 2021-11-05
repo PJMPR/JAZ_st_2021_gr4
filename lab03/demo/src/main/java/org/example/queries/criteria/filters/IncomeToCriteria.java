@@ -1,0 +1,23 @@
+package org.example.queries.criteria.filters;
+
+import org.example.queries.criteria.Criteria;
+import org.example.model.Person;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class IncomeToCriteria implements Criteria {
+
+    double num;
+
+    public IncomeToCriteria(double number){this.num = number;}
+
+    @Override
+    public List<Person> meetCriteria(List<Person> persons) {
+        if(num > 0) {
+            return persons.stream()
+                    .filter(person -> person.getIncome() <= num)
+                    .collect(Collectors.toList());
+        }
+        return persons;
+    }
+}
