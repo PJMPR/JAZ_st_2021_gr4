@@ -5,7 +5,6 @@ import org.example.caching.loaders.DictionaryCacheLoader;
 import org.example.model.Dictionary;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
