@@ -58,4 +58,15 @@ public class Dictionary {
     public void setDictionaryName(String dictionaryName) {
         this.dictionaryName = dictionaryName;
     }
+
+    @Override
+    public String toString() {
+        return "Dictionary{" +
+                "id=" + id +
+                ", intKey=" + intKey +
+                ", stringKey='" + stringKey + '\'' +
+                ", value='" + value + '\'' +
+                ", dictionaryName='" + dictionaryName + '\'' +
+                '}';
+    }
 }
