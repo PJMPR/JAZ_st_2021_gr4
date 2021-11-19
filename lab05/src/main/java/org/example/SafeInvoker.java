@@ -1,29 +1,29 @@
 package org.example;
 
-import org.example.Handlers.Error;
-import org.example.Handlers.ErrorHandlers.*;
-import org.example.Suppliers.FunctionSupplier;
+import org.example.Protocols.Error;
+import org.example.Protocols.ErrorProtocols.*;
+import org.example.Functions.Functions;
 
 import java.util.List;
 
 public class SafeInvoker {
-    private final List<Error> errorHandlers = List.of(
-            new FileNotFoundExceptionHandler(),
-            new IOExceptionHandler(),
-            new SQLExceptionHandler()
+    private final List<Error> errorProtocol = List.of(
+            new FileNotFoundExceptionProtocol(),
+            new IOExceptionProtocol(),
+            new SQLExceptionProtocol()
     );
 
-    public Error findErrorHandler(Exception exception){
-        return errorHandlers.stream()
-                .filter(errorHandler -> errorHandler.ifHandle(exception))
-                .findAny().orElse(new DefaultErrorHandler());
+    public void invoke(Functions functions) {
+        try {
+            functions.execute();
+        } catch (Exception exception) {
+            pickErrorProtocol(exception).protocol(functions, exception);
+        }
     }
 
-    public void invoke(FunctionSupplier functionSupplier){
-        try{
-            functionSupplier.execute();
-        }catch (Exception exception){
-            findErrorHandler(exception).handle(functionSupplier, exception);
-        }
+    public Error pickErrorProtocol(Exception exception) {
+        return errorProtocol.stream()
+                .filter(errorProtocol -> errorProtocol.ifProtocol(exception))
+                .findAny().orElse(new DefaultErrorProtocol());
     }
 }

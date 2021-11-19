@@ -1,8 +1,8 @@
 package org.example;
 
-import org.example.Handlers.Error;
-import org.example.Handlers.ErrorHandlers.DefaultErrorHandler;
-import org.example.Handlers.ErrorHandlers.FileNotFoundExceptionHandler;
+import org.example.Protocols.Error;
+import org.example.Protocols.ErrorProtocols.DefaultErrorProtocol;
+import org.example.Protocols.ErrorProtocols.FileNotFoundExceptionProtocol;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
@@ -21,15 +21,15 @@ public class SafeInvokerTest {
 
     @Test
     public void findErrorHandlerShouldReturnErrorHandlerWhenErrorIsOnTheList() {
-        Error errorHandler = safeInvoker.findErrorHandler(new FileNotFoundException());
-        assertEquals(FileNotFoundExceptionHandler.class, errorHandler.getClass());
+        Error errorHandler = safeInvoker.pickErrorProtocol(new FileNotFoundException());
+        assertEquals(FileNotFoundExceptionProtocol.class, errorHandler.getClass());
     }
 
 
     @Test
     public void findErrorHandlerShouldReturnDefaultErrorHandlerWhenErrorIsNotInTheList() {
-        Error errorHandler = safeInvoker.findErrorHandler(new Exception());
-        assertEquals(DefaultErrorHandler.class, errorHandler.getClass());
+        Error errorHandler = safeInvoker.pickErrorProtocol(new Exception());
+        assertEquals(DefaultErrorProtocol.class, errorHandler.getClass());
     }
 
     @Test
