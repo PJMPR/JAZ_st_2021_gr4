@@ -1,15 +1,14 @@
 package com.example.demo.controllers;
 
+import com.example.demo.projection.CustomerByWatchedMovies;
+import com.example.demo.projection.CustomerSpentMoney;
+import com.example.demo.projection.RentMoviesByMonth;
+import com.example.demo.projection.RentMoviesByMonthCustomer;
 import com.example.demo.repositories.CustomerRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @RestController
 @RequestMapping("customers")
@@ -21,14 +20,49 @@ public class CustomerController {
 
     CustomerRepository repository;
 
-    @GetMapping
-    @RequestMapping("{id}")
-    public ResponseEntity get(@PathVariable("id") int id){
-        Timestamp t = Timestamp.valueOf("2021-01-10 00:00:00");
-        return ResponseEntity.ok(repository.getById(id)
-                .getRentalsByCustomerId()
-                .stream()
-                .map(x->x.getLastUpdate())
-                .collect(Collectors.toList()));
+    @GetMapping("ranking/bySpentMoney")
+    public ResponseEntity<List<CustomerSpentMoney>> getBySpentMoney() {
+        return ResponseEntity.ok(repository.get10CustomersBySpentMoney());
     }
+
+    @GetMapping("ranking/bySpentMoney.jpg")
+    public ResponseEntity<byte[]> getBySpentMoneyChart(@RequestParam(value = "chart") String chart) {
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("ranking/byWatchedMovies")
+    public ResponseEntity<List<CustomerByWatchedMovies>> getByWatchedMovies() {
+        return ResponseEntity.ok(repository.get10CustomersByMostMoviesWatched());
+    }
+
+    @GetMapping("ranking/byWatchedMovies.jpg")
+    public ResponseEntity<byte[]> getByWatchedMoviesChart(@RequestParam(value = "chart") String chart) {
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("activity/rentMoviesByMonth")
+    public ResponseEntity<List<?>> getRentMoviesByMonth(@RequestParam(value = "year") Integer year,
+                                                                                @RequestParam(value = "customer_id") Integer id
+    ) {
+        if(id != null) return ResponseEntity.ok(repository.getRentMoviesByMonthForYearAndCustomer(id, year));
+        return ResponseEntity.ok(repository.getRentMoviesByMonthForYear(year));
+    }
+
+    @GetMapping("activity/rentMoviesByMonth.jpg")
+    public ResponseEntity<List<?>> getRentMoviesByMonthChart(@RequestParam(value = "chart") String chart,
+                                                             @RequestParam(value = "year") Integer year,
+                                                             @RequestParam(value = "id", required = false) Integer id
+    )
+    {
+        return ResponseEntity.ok(null);
+    }
+
+
+
+
+
+
+
+
+
 }
