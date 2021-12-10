@@ -30,7 +30,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     @Query(nativeQuery = true, value = "SELECT month(rental_date) AS month, count(rental_id) AS rentMovies " +
             "FROM rental GROUP BY month")
-    List<?> getRentMoviesByMonth();
+    List<RentMoviesByMonth> getRentMoviesByMonth();
 
     @Query(nativeQuery = true, value = "SELECT month(rental_date) AS month, COUNT(rental_id) AS rentMovies " +
                                         "FROM rental " +
