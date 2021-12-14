@@ -10,8 +10,8 @@ public class FilmActor {
     private int actorId;
     private int filmId;
     private Timestamp lastUpdate;
-    private Actor actorByActorId;
-    private Film filmByFilmId;
+    private Actor actor;
+    private Film film;
 
     @Id
     @Column(name = "actor_id")
@@ -67,21 +67,21 @@ public class FilmActor {
 
     @ManyToOne
     @JoinColumn(name = "actor_id", referencedColumnName = "actor_id", nullable = false, insertable = false, updatable = false)
-    public Actor getActorByActorId() {
-        return actorByActorId;
+    public Actor getActor() {
+        return actor;
     }
 
-    public void setActorByActorId(Actor actorByActorId) {
-        this.actorByActorId = actorByActorId;
+    public void setActor(Actor actor) {
+        this.actor = actor;
     }
 
     @ManyToOne
     @JoinColumn(name = "film_id", referencedColumnName = "film_id", nullable = false, insertable = false, updatable = false)
-    public Film getFilmByFilmId() {
-        return filmByFilmId;
+    public Film getFilm() {
+        return film;
     }
 
-    public void setFilmByFilmId(Film filmByFilmId) {
-        this.filmByFilmId = filmByFilmId;
+    public void setFilm(Film film) {
+        this.film = film;
     }
 }

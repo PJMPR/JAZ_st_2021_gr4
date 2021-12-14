@@ -1,55 +1,24 @@
 package com.example.demo.contract;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
 public class MovieDto {
-    int id;
-    @JsonProperty("imdb_id")
-    String imdbId;
-    @JsonProperty("original_title")
-    String originalTitle;
-    String overview;
-    List<GenreDto> genres;
 
-    public int getId() {
-        return id;
-    }
+    private String title;
+    @JsonProperty("overview")
+    private String description;
+    private String release_date;
+    private String original_language;
+    private List<GenreDto> genres;
+    @JsonProperty("spoken_languages")
+    private List<LanguagesDto> languages;
+    private int runtime;
+    private String imdb_id;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getImdbId() {
-        return imdbId;
-    }
-
-    public void setImdbId(String imdbId) {
-        this.imdbId = imdbId;
-    }
-
-    public String getOriginalTitle() {
-        return originalTitle;
-    }
-
-    public void setOriginalTitle(String originalTitle) {
-        this.originalTitle = originalTitle;
-    }
-
-    public String getOverview() {
-        return overview;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    public List<GenreDto> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(List<GenreDto> genres) {
-        this.genres = genres;
-    }
 }

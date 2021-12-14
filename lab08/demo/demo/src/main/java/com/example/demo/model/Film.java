@@ -118,7 +118,7 @@ public class Film {
     }
 
     @ManyToOne
-    @JoinColumn(name = "language_id", referencedColumnName = "language_id", nullable = false)
+    @JoinColumn(name = "language_id", referencedColumnName = "language_id")
     public Language getLanguage() {
         return language;
     }
@@ -127,7 +127,7 @@ public class Film {
         this.language = language;
     }
 
-    @OneToMany(mappedBy = "filmByFilmId")
+    @OneToMany(mappedBy = "film")
     public Collection<FilmActor> getFilmActors() {
         return filmActors;
     }
@@ -136,7 +136,7 @@ public class Film {
         this.filmActors = filmActors;
     }
 
-    @OneToMany(mappedBy = "filmByFilmId")
+    @OneToMany(mappedBy = "film")
     public Collection<FilmCategory> getFilmCategories() {
         return filmCategories;
     }

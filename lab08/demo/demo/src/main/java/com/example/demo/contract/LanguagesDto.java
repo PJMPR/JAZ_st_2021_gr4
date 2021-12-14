@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class GenreDto {
-    private String name;
+public class LanguagesDto {
+    String english_name;
+    String iso_639_1;
 }

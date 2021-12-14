@@ -76,7 +76,7 @@ public class Actor {
         return result;
     }
 
-    @OneToMany(mappedBy = "actorByActorId")
+    @OneToMany(mappedBy = "actor")
     public Collection<FilmActor> getFilmActors() {
         return filmActors;
     }
