@@ -12,7 +12,7 @@ public class DBUpdaterJob implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        serviceClient.reloadData();
+        serviceClient.reloadData(1980);
     }
 
 }

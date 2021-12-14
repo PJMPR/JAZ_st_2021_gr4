@@ -28,15 +28,21 @@ public class MoviesClientController {
 
     @GetMapping("/updater/reload")
     public ResponseEntity reloadDataByYear(@RequestParam (value = "year", required = false) Integer year) {
-        if(year == null) return ResponseEntity.ok(client.reloadData());
+        if(year == null) return ResponseEntity.ok(client.reloadDataByYear(1980));
         return ResponseEntity.ok(client.reloadDataByYear(year));
     }
 
     @GetMapping("/updater/status")
-    public ResponseEntity getSystemStatus(){
+    public ResponseEntity<?> getSystemStatus(){
         return ResponseEntity.ok(client.getSystemStatusInfo());
     }
 
+
+    @GetMapping("/year/{year}")
+    public ResponseEntity getMovieByYear(@PathVariable int year){
+        var movies = client.getMoviesByYear(year);
+        return ResponseEntity.ok(movies);
+    }
 
 
 }

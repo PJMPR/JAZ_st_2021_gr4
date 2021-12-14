@@ -1,5 +1,6 @@
 package com.example.demo.quartz.web;
 
+import com.example.demo.model.Film;
 import com.example.demo.quartz.job.DBUpdaterJob;
 import com.example.demo.quartz.payload.ProcessInfo;
 import com.example.demo.quartz.payload.StatusInfo;
@@ -25,9 +26,9 @@ public class DBUpdaterSchedulerController {
     private Scheduler scheduler;
 
     @PostMapping("/schedule/updater")
-    public ResponseEntity<StatusInfo> scheduleUpdate(@RequestBody int id){
+    public ResponseEntity<StatusInfo> scheduleUpdate(@RequestBody Film film){
         try{
-            JobDetail jobDetail = buildJobDetail(id);
+            JobDetail jobDetail = buildJobDetail(film.getFilmId());
             Trigger trigger = buildTrigger(jobDetail, ZonedDateTime.now());
 
             scheduler.scheduleJob(jobDetail, trigger);
@@ -64,7 +65,7 @@ public class DBUpdaterSchedulerController {
                 .withIdentity(jobDetail.getKey().getName(), "updater")
                 .withDescription("Updater trigger")
                 .startAt(Date.from(startedAt.toInstant()))
-                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withMisfireHandlingInstructionFireNow())
+                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInHours(24))
                 .build();
     }
 }

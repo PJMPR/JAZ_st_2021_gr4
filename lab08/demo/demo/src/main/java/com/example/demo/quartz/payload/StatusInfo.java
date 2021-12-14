@@ -18,6 +18,15 @@ public class StatusInfo {
     ArrayList<ProcessInfo> stepFinished;
     ArrayList<String> errorMessages;
 
+    private static StatusInfo statusInfo = null;
+
+    private StatusInfo() {
+        statusInfo = new StatusInfo();
+    }
+    public static StatusInfo getInstance() {
+        return statusInfo==null? new StatusInfo() : statusInfo;
+    }
+
     public StatusInfo(Date reloadStarted, ArrayList<String> errorMessages) {
         this.reloadStarted = reloadStarted;
         this.errorMessages = errorMessages;
