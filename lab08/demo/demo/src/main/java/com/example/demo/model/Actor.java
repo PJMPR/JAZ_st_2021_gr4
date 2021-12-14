@@ -1,11 +1,12 @@
 package com.example.demo.model;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
 public class Actor {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int actorId;
     private String firstName;
     private String lastName;
@@ -76,12 +77,21 @@ public class Actor {
         return result;
     }
 
-    @OneToMany(mappedBy = "actorByActorId")
+    @OneToMany(mappedBy = "actor")
     public Collection<FilmActor> getFilmActors() {
         return filmActors;
     }
 
     public void setFilmActors(Collection<FilmActor> filmActors) {
         this.filmActors = filmActors;
+    }
+
+    public Actor(String firstName,String lastName){
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Actor() {
+
     }
 }

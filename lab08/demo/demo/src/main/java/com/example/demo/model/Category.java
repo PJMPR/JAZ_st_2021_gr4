@@ -1,5 +1,4 @@
 package com.example.demo.model;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -63,7 +62,7 @@ public class Category {
         return result;
     }
 
-    @OneToMany(mappedBy = "categoryByCategoryId")
+    @OneToMany(mappedBy = "category")
     public Collection<FilmCategory> getFilmCategories() {
         return filmCategories;
     }

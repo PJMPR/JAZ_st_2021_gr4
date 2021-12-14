@@ -1,17 +1,15 @@
 package com.example.demo.contract;
-
+import java.util.List;
+import com.example.demo.model.Actor;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-
 public class MovieDto {
-    int id;
-    @JsonProperty("imdb_id")
-    String imdbId;
+
+    public int id;
     @JsonProperty("original_title")
-    String originalTitle;
-    String overview;
-    List<GenreDto> genres;
+    public String title;
+
+    private String overview;
 
     public int getId() {
         return id;
@@ -21,20 +19,12 @@ public class MovieDto {
         this.id = id;
     }
 
-    public String getImdbId() {
-        return imdbId;
-    }
-
-    public void setImdbId(String imdbId) {
-        this.imdbId = imdbId;
-    }
-
     public String getOriginalTitle() {
-        return originalTitle;
+        return title;
     }
 
-    public void setOriginalTitle(String originalTitle) {
-        this.originalTitle = originalTitle;
+    public void setOriginalTitle(String title) {
+        this.title = title;
     }
 
     public String getOverview() {
@@ -45,11 +35,50 @@ public class MovieDto {
         this.overview = overview;
     }
 
-    public List<GenreDto> getGenres() {
-        return genres;
+    private int year;
+    private String rating;
+    private List<Actor> actors;
+    private String imdb_id;
+
+    public MovieDto(String title, int id, String overview, int year, String rating, List<Actor> actors, String imdb_id) {
+        this.title = title;
+        this.id = id;
+        this.overview = overview;
+        this.year = year;
+        this.rating = rating;
+        this.actors = actors;
+        this.imdb_id = imdb_id;
     }
 
-    public void setGenres(List<GenreDto> genres) {
-        this.genres = genres;
+    public List<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(List<Actor> actors) {
+        this.actors = actors;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public String getImdb_id() {
+        return imdb_id;
+    }
+
+    public void setImdb_id(String imdb_id) {
+        this.imdb_id = imdb_id;
     }
 }
