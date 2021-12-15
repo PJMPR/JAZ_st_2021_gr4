@@ -1,5 +1,4 @@
 package com.example.demo.model;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -63,7 +62,7 @@ public class Language {
         return result;
     }
 
-    @OneToMany(mappedBy = "language")
+    @OneToMany(mappedBy = "languageBy")
     public Collection<Film> getFilms() {
         return films;
     }
