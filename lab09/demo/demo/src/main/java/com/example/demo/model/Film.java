@@ -1,5 +1,8 @@
 package com.example.demo.model;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -117,6 +120,7 @@ public class Film {
         return result;
     }
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "language_id", referencedColumnName = "language_id", nullable = false)
     public Language getLanguage() {
