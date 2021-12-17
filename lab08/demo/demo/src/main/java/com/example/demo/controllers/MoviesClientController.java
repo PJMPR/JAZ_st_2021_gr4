@@ -28,8 +28,8 @@ public class MoviesClientController {
 
     @GetMapping("/updater/reload")
     public ResponseEntity reloadDataByYear(@RequestParam (value = "year", required = false) Integer year) {
-        if(year == null) return ResponseEntity.ok(client.reloadDataByYear(1980));
-        return ResponseEntity.ok(client.reloadDataByYear(year));
+        if(year == null) return ResponseEntity.ok(client.reloadData(1980));
+        return ResponseEntity.ok(client.reloadData(year));
     }
 
     @GetMapping("/updater/status")
