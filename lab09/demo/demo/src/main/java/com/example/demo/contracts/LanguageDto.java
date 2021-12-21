@@ -7,9 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class LanguageDto {
-    private Integer id;
+    private int id;
     private String name;
 }
