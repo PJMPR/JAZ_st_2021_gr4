@@ -13,11 +13,12 @@ import java.util.List;
 public class LanguageController {
 
     @GetMapping
-    public ResponseEntity getLanguages(){
+    public ResponseEntity<List<LanguageDto>> getLanguages(){
         return ResponseEntity.ok(List.of(
-                new LanguageDto(1, "polish"),
-                new LanguageDto(1, "english"),
-                new LanguageDto(1, "german")
-                ));
+                new LanguageDto(1,"polish"),
+                new LanguageDto(2,"english"),
+                new LanguageDto(3,"french")
+        ));
     }
+
 }
