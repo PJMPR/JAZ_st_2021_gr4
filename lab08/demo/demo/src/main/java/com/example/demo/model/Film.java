@@ -1,5 +1,4 @@
 package com.example.demo.model;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -13,7 +12,7 @@ public class Film {
     private int length;
     private String rating;
     private Timestamp lastUpdate;
-    private Language language;
+    private Language languageBy;
     private Collection<FilmActor> filmActors;
     private Collection<FilmCategory> filmCategories;
 
@@ -119,15 +118,15 @@ public class Film {
 
     @ManyToOne
     @JoinColumn(name = "language_id", referencedColumnName = "language_id", nullable = false)
-    public Language getLanguage() {
-        return language;
+    public Language getLanguageBy() {
+        return languageBy;
     }
 
-    public void setLanguage(Language language) {
-        this.language = language;
+    public void setLanguageBy(Language languageBy) {
+        this.languageBy = languageBy;
     }
 
-    @OneToMany(mappedBy = "filmByFilmId")
+    @OneToMany(mappedBy = "film")
     public Collection<FilmActor> getFilmActors() {
         return filmActors;
     }
@@ -136,7 +135,7 @@ public class Film {
         this.filmActors = filmActors;
     }
 
-    @OneToMany(mappedBy = "filmByFilmId")
+    @OneToMany(mappedBy = "film")
     public Collection<FilmCategory> getFilmCategories() {
         return filmCategories;
     }
