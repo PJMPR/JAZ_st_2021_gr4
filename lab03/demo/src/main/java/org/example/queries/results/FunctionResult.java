@@ -3,16 +3,18 @@ package org.example.queries.results;
 import org.example.queries.search.Funcs;
 
 public class FunctionResult {
-    private Funcs function;
-    private String fieldName;
-    private double value;
 
-    public Funcs getFunction() {
-        return function;
+    private String fieldName;
+    private Funcs function;
+    private double result;
+
+    public FunctionResult() {
     }
 
-    public void setFunction(Funcs function) {
+    public FunctionResult(String fieldName, Funcs function, double result) {
+        this.fieldName = fieldName;
         this.function = function;
+        this.result = result;
     }
 
     public String getFieldName() {
@@ -23,11 +25,19 @@ public class FunctionResult {
         this.fieldName = fieldName;
     }
 
-    public double getValue() {
-        return value;
+    public Funcs getFunction() {
+        return function;
     }
 
-    public void setValue(double value) {
-        this.value = value;
+    public void setFunction(Funcs function) {
+        this.function = function;
+    }
+
+    public double getResult() {
+        return result;
+    }
+
+    public void setResult(double result) {
+        this.result = result;
     }
 }

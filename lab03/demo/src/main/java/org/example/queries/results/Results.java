@@ -5,18 +5,18 @@ import org.example.model.Person;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Results {
+public class Results<TEntity> {
 
-    private List<Person> items = new ArrayList<>();
+    private List<TEntity> items = new ArrayList<>();
     private List<FunctionResult> functionResults = new ArrayList<>();
     private int pages;
     private int currentPage;
 
-    public List<Person> getItems() {
+    public List<TEntity> getItems() {
         return items;
     }
 
-    public void setItems(List<Person> items) {
+    public void setItems(List<TEntity> items) {
         this.items = items;
     }
 
