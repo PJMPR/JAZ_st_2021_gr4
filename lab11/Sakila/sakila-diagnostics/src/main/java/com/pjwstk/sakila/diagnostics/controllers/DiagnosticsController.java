@@ -1,9 +1,13 @@
 package com.pjwstk.sakila.diagnostics.controllers;
 
+import com.pjwstk.sakila.diagnostics.selftest.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("diagnostics")
@@ -16,6 +20,11 @@ public class DiagnosticsController {
 
     @GetMapping("selftest")
     public ResponseEntity selftest(){
-        return ResponseEntity.ok("Selftest");
+        SelfTestRunner selfTestRunner = new SelfTestRunner();
+        selfTestRunner.setSelfTestList(Arrays.asList(new DiskStorageSelfTest(),
+                                                    new SakilaDbConnectionSelfTest(),
+                                                    new ImDBServiceSelfTest(),
+                                                    new TheMovieDbServiceConnectionSelfTest()));
+        return ResponseEntity.ok(selfTestRunner.run());
     }
 }
