@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@Component
 @AllArgsConstructor
 public class TheMovieDbServiceConnectionSelfTest extends SelfTestBase {
     @Value("${themoviesdb.api.key}")String apiKey;

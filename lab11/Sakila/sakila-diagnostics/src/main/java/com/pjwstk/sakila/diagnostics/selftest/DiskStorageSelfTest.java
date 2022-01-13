@@ -1,11 +1,13 @@
 package com.pjwstk.sakila.diagnostics.selftest;
 
 import com.pjwstk.sakila.diagnostics.contract.SelftestResult;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class DiskStorageSelfTest extends SelfTestBase{
     private static final int REQUIRED_DISK_PERCENTAGE = 5;
 
