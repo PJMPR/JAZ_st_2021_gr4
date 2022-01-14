@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Controller
 @RequestMapping("diagnostics")
@@ -21,10 +20,7 @@ public class DiagnosticsController {
     @GetMapping("selftest")
     public ResponseEntity selftest(){
         SelfTestRunner selfTestRunner = new SelfTestRunner();
-        selfTestRunner.setSelfTestList(Arrays.asList(new DiskStorageSelfTest(),
-                                                    new SakilaDbConnectionSelfTest(),
-                                                    new ImDBServiceSelfTest(),
-                                                    new TheMovieDbServiceConnectionSelfTest()));
+        selfTestRunner.setSelfTestList(Arrays.asList(new DiskStorageSelfTest()));
         return ResponseEntity.ok(selfTestRunner.run());
     }
 }

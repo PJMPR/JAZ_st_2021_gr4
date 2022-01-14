@@ -1,10 +1,14 @@
 package com.pjwstk.sakila.diagnostics.selftest;
 
 import com.pjwstk.sakila.diagnostics.contract.SelftestResult;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public abstract class SelfTestBase implements SelfTest {
-    String name;
-    String description;
+    public String name;
+    public String description;
 
     abstract public SelftestResult execute();
 }

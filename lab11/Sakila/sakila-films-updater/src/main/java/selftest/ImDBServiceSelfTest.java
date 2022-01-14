@@ -1,6 +1,7 @@
-package com.pjwstk.sakila.diagnostics.selftest;
+package selftest;
 
 import com.pjwstk.sakila.diagnostics.contract.SelftestResult;
+import com.pjwstk.sakila.diagnostics.selftest.SelfTestBase;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
